@@ -1,0 +1,644 @@
+<!DOCTYPE HTML>
+<!--
+  Personal site for Adarsh Kumar — styled after Dimension (HTML5 UP, html5up.net | @ajlkn)
+  Single self-contained file + bg-galaxy.jpg (place in same folder).
+  Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html lang="en">
+<head>
+<title>Adarsh Kumar — Astronomy &amp; Planetary Sciences</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; padding: 0; }
+  body {
+    font-family: 'Source Sans Pro', 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif;
+    font-weight: 300; color: #ffffff; font-size: 15pt; line-height: 1.65;
+    background: #0a0d14;
+    -webkit-text-size-adjust: none; overflow-x: hidden;
+  }
+  @media screen and (max-width: 1680px) { body { font-size: 12pt; } }
+  @media screen and (max-width: 736px)  { body { font-size: 11pt; } }
+
+  a { color: #ffffff; text-decoration: none; border-bottom: dotted 1px rgba(255,255,255,0.5); transition: color .2s ease, border-color .2s ease; }
+  a:hover { color: #ffd580; border-bottom-color: transparent; }
+  h1, h2, h3, h4 { font-weight: 600; color: #ffffff; line-height: 1.3; margin: 0 0 0.7em 0; letter-spacing: 0.12em; }
+  h1 { font-size: 2.6em; letter-spacing: 0.18em; text-transform: uppercase; }
+  h2 { font-size: 1.4em; letter-spacing: 0.18em; text-transform: uppercase; }
+  h3 { font-size: 1em; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.4em; }
+  p  { margin: 0 0 1em 0; }
+  strong { color: #ffffff; font-weight: 600; }
+  em { color: rgba(255,255,255,0.85); font-style: italic; }
+  ul { padding-left: 1.2em; margin: 0 0 1em 0; }
+  ul li { margin-bottom: 0.3em; }
+  hr { border: 0; border-top: solid 1px rgba(255,255,255,0.15); margin: 1.5em 0; }
+
+  /* Background — real Hubble galaxy cluster image, darkened with ~55% black overlay
+     so image shows at ~45% opacity (≈ 40%+ transparency) for readable white text */
+  #bg {
+    position: fixed; inset: 0; z-index: -1;
+    background-image: url('bg image.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
+  #bg::before {
+    /* 55% black overlay -> image ≈ 45% visible, high contrast for text */
+    content: ''; position: absolute; inset: 0;
+    background: rgba(5,8,15,0.55);
+  }
+
+  body.is-preload *, body.is-preload *::before, body.is-preload *::after {
+    animation: none !important; transition: none !important;
+  }
+  body.is-article-visible { overflow: hidden; }
+
+  /* Wrapper — centered flex */
+  #wrapper {
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100vh; padding: 3em 1em;
+    transition: opacity 0.8s ease; opacity: 1;
+    width: 100%;
+  }
+  body.is-article-visible #wrapper > #header,
+  body.is-article-visible #wrapper > #footer { opacity: 0.12; filter: blur(2px); pointer-events: none; }
+  body.is-preload #wrapper { opacity: 0; }
+
+  /* HEADER — perfectly centered block */
+  #header {
+    display: flex; flex-direction: column; align-items: center;
+    width: 100%; max-width: 42em; text-align: center;
+    transition: opacity 0.6s ease, filter 0.6s ease;
+    position: relative; z-index: 2;
+  }
+  /* Connecting lines: thin white vertical lines joining logo -> content -> nav
+     (mirroring the original Dimension template) */
+  #header .logo { position: relative; }
+  #header .logo::after {
+    content: ''; position: absolute; left: 50%; bottom: -2em;
+    width: 1px; height: 2em;
+    background: rgba(255,255,255,0.5);
+    transform: translateX(-50%);
+  }
+  #header .content { position: relative; }
+  #header .content::before {
+    content: ''; position: absolute; left: 50%; top: 0;
+    width: 1px; height: 2em;
+    background: rgba(255,255,255,0.5);
+    transform: translate(-50%, -100%);
+  }
+
+  #header .content {
+    border-top: solid 1px rgba(255,255,255,0.4);
+    border-bottom: solid 1px rgba(255,255,255,0.4);
+    padding: 2em 1.5em;
+    width: 100%;
+    margin: 0;
+  }
+  #header .content .inner { max-width: none; margin: 0 auto; }
+  #header .content h1 { margin: 0 0 0.4em 0; font-size: 2.8em; line-height: 1; text-align: center; }
+  #header .content p { margin: 0; font-size: 1em; color: rgba(255,255,255,0.9); text-align: center; }
+
+  /* Circular logo — spiral galaxy icon */
+  #header .logo {
+    width: 5.5em; height: 5.5em; border-radius: 50%;
+    border: solid 1px rgba(255,255,255,0.4);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 2em auto;
+    background: radial-gradient(circle at 50% 50%, rgba(122,162,247,0.15), rgba(0,0,0,0.2));
+    animation: pulseGlow 5s ease-in-out infinite;
+  }
+  @keyframes pulseGlow {
+    0%,100% { box-shadow: 0 0 0 0 rgba(255,213,128,0.0); }
+    50%     { box-shadow: 0 0 35px 4px rgba(255,213,128,0.25); }
+  }
+  #header .logo svg { width: 65%; height: 65%; }
+
+  /* Nav buttons */
+  #header nav { margin-top: 0; display: flex; justify-content: center; width: 100%; padding-top: 2em; position: relative; }
+  #header nav ul { list-style: none; padding: 0; margin: 0; display: flex; gap: 0.5em; flex-wrap: wrap; justify-content: center; }
+  #header nav ul li a {
+    display: inline-block; padding: 0.6em 1.6em;
+    border: solid 1px rgba(255,255,255,0.4); border-radius: 4px;
+    font-size: 0.85em; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+    background: rgba(0,0,0,0.15); color: #fff;
+    transition: background .2s ease, border-color .2s ease, color .2s ease;
+  }
+  #header nav ul li a:hover { background: rgba(255,255,255,0.1); border-color: #fff; }
+
+  /* MAIN — article panels: full-screen flex overlay using margin:auto so
+     short panels stay vertically centered and tall panels start from the
+     top and are fully scrollable from top to bottom */
+  #main {
+    position: fixed; inset: 0; z-index: 3;
+    display: none;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  #main .scroller {
+    min-height: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 3em 1em;
+  }
+  body.is-article-visible #main { display: block; }
+  #main article {
+    display: none;
+    width: 44em; max-width: 100%;
+    margin: auto;
+    background: rgba(15,20,30,0.94);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: solid 1px rgba(255,255,255,0.15);
+    border-radius: 6px;
+    padding: 3.5em 3em 2.5em 3em;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+    opacity: 0;
+    transform: translateY(25px) scale(0.97);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    text-align: left;
+    position: relative;
+  }
+  /* When article is short enough, center it vertically via margin: auto on
+     the flex child; for tall content this margin is ignored and content
+     starts from the top (fully scrollable). */
+  #main article.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  #main article h2.major { text-align: center; margin-bottom: 1.2em; }
+
+  #main article .close {
+    position: absolute; top: 0; right: 0; width: 3em; height: 3em;
+    cursor: pointer; text-indent: 3em; white-space: nowrap; overflow: hidden;
+    border-bottom: none !important;
+  }
+  #main article .close::before, #main article .close::after {
+    content:''; position: absolute; top: 50%; left: 50%; width: 16px; height: 2px;
+    background: rgba(255,255,255,0.7); transition: background .2s;
+  }
+  #main article .close::before { transform: translate(-50%,-50%) rotate(45deg); }
+  #main article .close::after  { transform: translate(-50%,-50%) rotate(-45deg); }
+  #main article .close:hover::before, #main article .close:hover::after { background: #ffd580; }
+
+  /* Experience / Education entry */
+  .entry { margin-bottom: 1.4em; padding-bottom: 1.2em; border-bottom: solid 1px rgba(255,255,255,0.08); }
+  .entry:last-of-type { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .entry .entry-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.3em; margin-bottom: 0.2em; }
+  .entry .entry-title { font-weight: 600; font-size: 1em; letter-spacing: 0.05em; color: #fff; margin: 0; }
+  .entry .entry-date  { font-size: 0.8em; color: #ffd580; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; }
+  .entry .entry-sub   { font-size: 0.9em; color: rgba(255,255,255,0.75); margin-bottom: 0.4em; }
+  .entry p { font-size: 0.92em; color: rgba(255,255,255,0.82); margin: 0; }
+
+  /* Publication entry */
+  .pub {
+    margin: 0.8em 0; padding: 1em 1.2em;
+    border-left: 3px solid #ffd580;
+    background: rgba(255,213,128,0.07);
+    border-radius: 0 4px 4px 0;
+    font-size: 0.92em;
+  }
+  .pub .pub-title { font-style: italic; color: #fff; display: block; margin-bottom: 0.3em; }
+  .pub .pub-meta  { font-size: 0.85em; color: rgba(255,255,255,0.7); }
+
+  /* Event highlight */
+  .event {
+    margin-top: 1.2em; padding: 1em 1.2em;
+    border-left: 3px solid #7aa2f7; background: rgba(122,162,247,0.08);
+    border-radius: 0 4px 4px 0; font-size: 0.92em;
+  }
+  .event .meta { font-size: 0.82em; color: #7aa2f7; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.3em; }
+
+  /* Icons (social) */
+  ul.icons { list-style: none; padding: 0; margin: 1.2em 0 0 0; display: flex; gap: 0.6em; flex-wrap: wrap; justify-content: center; }
+  ul.icons li a {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 2.6em; height: 2.6em; border-radius: 50%;
+    border: solid 1px rgba(255,255,255,0.35);
+    border-bottom: solid 1px rgba(255,255,255,0.35) !important;
+    transition: background .2s, border-color .2s, color .2s;
+  }
+  ul.icons li a:hover { background: rgba(255,255,255,0.1); border-color: #fff; color: #ffd580; }
+  ul.icons li a svg { width: 1em; height: 1em; fill: currentColor; }
+
+  /* Contact form */
+  form .fields { display: flex; flex-wrap: wrap; gap: 1em; margin-bottom: 1em; }
+  form .field { flex: 1 1 100%; }
+  form .field.half { flex: 1 1 calc(50% - 0.5em); }
+  form label { display: block; font-size: 0.82em; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.4em; color: rgba(255,255,255,0.8); }
+  form input[type=text], form input[type=email], form textarea {
+    width: 100%; padding: 0.7em 1em; background: rgba(255,255,255,0.06);
+    border: solid 1px rgba(255,255,255,0.2); border-radius: 4px; color: #fff;
+    font: inherit; transition: border-color .2s, background .2s;
+  }
+  form input:focus, form textarea:focus { outline: 0; border-color: #ffd580; background: rgba(255,255,255,0.1); }
+  form textarea { resize: vertical; min-height: 7em; }
+  ul.actions { list-style: none; padding: 0; margin: 0; display: flex; gap: 0.8em; flex-wrap: wrap; justify-content: center; }
+  ul.actions li input[type=submit], ul.actions li input[type=reset] {
+    cursor: pointer; font: inherit; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em;
+    font-size: 0.8em; padding: 0.7em 1.6em; border-radius: 4px; border: solid 1px rgba(255,255,255,0.4);
+    background: transparent; color: #fff; transition: background .2s, border-color .2s;
+  }
+  ul.actions li input[type=submit] { background: #ffd580; border-color: #ffd580; color: #0a0d14; }
+  ul.actions li input[type=submit]:hover { background: #ffe0a0; border-color: #ffe0a0; }
+  ul.actions li input[type=reset]:hover { background: rgba(255,255,255,0.1); border-color: #fff; }
+
+  .contact-details { margin-top: 1.5em; font-size: 0.92em; color: rgba(255,255,255,0.8); text-align: center; }
+  .contact-details p { margin: 0.3em 0; }
+
+  /* Footer */
+  #footer {
+    position: fixed; bottom: 1.5em; left: 0; width: 100%; text-align: center;
+    z-index: 2; transition: opacity 0.6s ease, filter 0.6s ease;
+  }
+  #footer .copyright { margin: 0; font-size: 0.78em; color: rgba(255,255,255,0.55); letter-spacing: 0.1em; }
+  #footer .copyright a { color: rgba(255,255,255,0.7); }
+
+  /* Scrollbar styling inside article */
+  #main article::-webkit-scrollbar { width: 6px; }
+  #main article::-webkit-scrollbar-track { background: transparent; }
+  #main article::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 3px; }
+
+  /* Responsive */
+  @media screen and (max-width: 980px) {
+    #main .scroller { padding: 2em 0.8em; }
+    #main article { padding: 3em 2em 2em 2em; }
+    #header .content { padding: 1.8em 1em; }
+    #header .content h1 { font-size: 2.2em; }
+  }
+  @media screen and (max-width: 480px) {
+    #main .scroller { padding: 1em 0.5em; }
+    #header nav ul { flex-direction: column; width: 100%; }
+    #header nav ul li a { display: block; }
+    #header .content h1 { font-size: 1.7em; letter-spacing: 0.12em; }
+    #header .content p { font-size: 0.9em; }
+    #main article { padding: 2.8em 1.4em 1.5em 1.4em; }
+    form .field.half { flex: 1 1 100%; }
+    .entry .entry-head { flex-direction: column; align-items: flex-start; }
+    #footer { position: static; margin-top: 2em; }
+  }
+</style>
+<noscript><style>body.is-preload #wrapper{opacity:1;}</style></noscript>
+</head>
+<body class="is-preload">
+
+<div id="bg"></div>
+
+<div id="wrapper">
+
+  <!-- HEADER (centered) -->
+  <header id="header">
+    <div class="logo" aria-hidden="true">
+      <!-- Spiral galaxy icon -->
+      <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="core" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#fff8e0"/>
+            <stop offset="60%" stop-color="#ffd580"/>
+            <stop offset="100%" stop-color="#ffd580" stop-opacity="0.3"/>
+          </radialGradient>
+        </defs>
+        <!-- Outer glow -->
+        <circle cx="32" cy="32" r="28" fill="rgba(122,162,247,0.08)"/>
+        <!-- Spiral arms -->
+        <g fill="none" stroke="#cfd9ee" stroke-width="1.2" stroke-linecap="round" opacity="0.85">
+          <path d="M32 32 C38 22, 52 22, 54 32 C56 42, 44 50, 34 44"/>
+          <path d="M32 32 C26 42, 12 42, 10 32 C8 22, 20 14, 30 20"/>
+        </g>
+        <g fill="none" stroke="#7aa2f7" stroke-width="0.8" stroke-linecap="round" opacity="0.7">
+          <path d="M32 32 C36 25, 46 26, 48 32 C50 38, 42 44, 34 40"/>
+          <path d="M32 32 C28 39, 18 38, 16 32 C14 26, 22 20, 30 24"/>
+        </g>
+        <!-- Dust lanes hints -->
+        <g fill="none" stroke="#b48fff" stroke-width="0.6" stroke-linecap="round" opacity="0.5">
+          <path d="M32 32 C37 24, 50 24, 52 32"/>
+          <path d="M32 32 C27 40, 14 40, 12 32"/>
+        </g>
+        <!-- Bulge -->
+        <circle cx="32" cy="32" r="6" fill="url(#core)"/>
+        <!-- Scattered stars -->
+        <g fill="#fff">
+          <circle cx="48" cy="18" r="0.8"/><circle cx="16" cy="16" r="0.7"/>
+          <circle cx="52" cy="44" r="0.9"/><circle cx="12" cy="46" r="0.8"/>
+          <circle cx="40" cy="12" r="0.6"/><circle cx="22" cy="52" r="0.7"/>
+        </g>
+      </svg>
+    </div>
+    <div class="content">
+      <div class="inner">
+        <h1>Adarsh Kumar</h1>
+        <p>PhD Candidate in Astronomy &amp; Planetary Sciences<br />
+        Instituto de Astronomía y Ciencias Planetarias (INCT)<br />
+        Universidad de Atacama, Copiapó — Chile</p>
+      </div>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#research">Research</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- MAIN (centered modal panels) -->
+  <div id="main">
+    <div class="scroller">
+
+    <!-- ABOUT -->
+    <article id="about">
+      <h2 class="major">About</h2>
+      <p>Greetings! I am a doctoral candidate at the <strong>Instituto de Astronomía y
+      Ciencias Planetarias</strong>, Universidad de Atacama, Chile. I obtained my
+      Bachelor's &amp; Master's at the <strong>Indian Institute of Science Education and
+      Research (IISER) Bhopal</strong>, with my Master's research carried out at the
+      <strong>Institute for Computational Cosmology, Durham University</strong>.</p>
+      <p>I work at the intersection of <strong>observational and data-driven
+      astronomy</strong>, focusing on the formation and evolution of galaxies — particularly
+      those whose histories are shaped by major/minor merger events. I enjoy building
+      <strong>interpretable machine-learning</strong> tools that turn large survey datasets
+      into physical insight, scalable to next-generation facilities like LSST and Euclid.</p>
+      <p>I am actively looking toward postdoctoral positions in observational studies of
+      galaxies and black holes, and I'm always happy to discuss collaborations, galaxies,
+      or the Atacama skies.</p>
+    </article>
+
+    <!-- RESEARCH -->
+    <article id="research">
+      <h2 class="major">Research</h2>
+      <p>My research sits at the intersection of extragalactic astronomy and data science:
+      I use observational data, machine learning, and interpretable statistical models to
+      understand how galaxies form, merge, and evolve across different environments.</p>
+
+      <h3>Current PhD focus</h3>
+      <p>At UDA I am studying how <strong>galaxy morphology changes from cluster cores to
+      their outskirts</strong>, combining multiple characterization techniques — including
+      machine-learning-based methods — to investigate how galaxy properties relate to their
+      environment and what that tells us about galaxy evolution as a whole.</p>
+
+      <h3>Selected Publication</h3>
+      <div class="pub">
+        <span class="pub-title">The PAU Survey: Uncovering the connection between intrinsic
+        and observed galaxy properties using symbolic regression</span>
+        <span class="pub-meta">Adarsh Kumar et al. — <em>Monthly Notices of the Royal
+        Astronomical Society (MNRAS)</em>, 2025.
+        <a href="https://academic.oup.com/mnras/advance-article/doi/10.1093/mnras/stag1332/8735175" target="_blank" rel="noopener">Read paper →</a></span>
+      </div>
+      <p style="font-size:0.88em;color:rgba(255,255,255,0.75);margin-top:0.5em;">
+      Master's thesis work carried out at Durham University with the GALFORM semi-analytical
+      model and PAU Survey mock catalogs (out to z&nbsp;~&nbsp;1.99). The derived expressions
+      can be evaluated instantly for millions of galaxies with an accuracy comparable to
+      traditional SED fitting codes, making them well-suited for upcoming surveys like LSST
+      and Euclid.</p>
+
+      <div class="event">
+        <div class="meta">📅 Upcoming — 26–30 October 2026 · Valparaíso</div>
+        <strong>XXI Reunión Anual de SOCHIAS</strong> — Poster accepted.
+        I will present work on interpretable machine learning for galaxy property inference,
+        with Universidad de Atacama as my affiliated institution.
+      </div>
+    </article>
+
+    <!-- EXPERIENCE -->
+    <article id="experience">
+      <h2 class="major">Experience</h2>
+
+      <div class="entry">
+        <div class="entry-head">
+          <h3 class="entry-title">PhD Student — Universidad de Atacama</h3>
+          <span class="entry-date">Mar 2025 — Present</span>
+        </div>
+        <div class="entry-sub">Instituto de Astronomía y Ciencias Planetarias (INCT) · Copiapó, Chile</div>
+        <p>Doctoral candidate working on galaxy morphology across cluster environments,
+        combining observational datasets with machine-learning characterization techniques.</p>
+      </div>
+
+      <div class="entry">
+        <div class="entry-head">
+          <h3 class="entry-title">Citizen Scientist — International Astronomical Search Collaboration (IASC)</h3>
+          <span class="entry-date">May – Jun 2026</span>
+        </div>
+        <div class="entry-sub">NASA Planetary Defense · Pan-STARRS &amp; Catalina Sky Survey · Chile</div>
+        <p>Collaborated with teammates from Chile and Argentina to make
+        <strong>3 preliminary discoveries of main-belt asteroids</strong> as part of the
+        IASC program.</p>
+      </div>
+
+      <div class="entry">
+        <div class="entry-head">
+          <h3 class="entry-title">ALMA Cycle 13 Proposal Preparation Workshop</h3>
+          <span class="entry-date">Mar 2026</span>
+        </div>
+        <div class="entry-sub">ALMA Observatory · Universidad de Atacama, Copiapó</div>
+        <p>Participated in hands-on training covering ALMA science capabilities, mock ALMA
+        observations, and proposal review.</p>
+      </div>
+
+      <div class="entry">
+        <div class="entry-head">
+          <h3 class="entry-title">First Chilean ALMA User's School</h3>
+          <span class="entry-date">Nov 2025</span>
+        </div>
+        <div class="entry-sub">Universidad de Valparaíso · Valparaíso, Chile</div>
+        <p>Week of lectures and hands-on sessions on synthesis imaging, mm/submm
+        interferometry, ALMA data reduction and CARTA analysis. Included a coordinated
+        visit to the <strong>ALMA Observatory at 5000&nbsp;m</strong> and the Operations
+        Support Facility at 2900&nbsp;m near San Pedro de Atacama.</p>
+      </div>
+
+      <div class="entry">
+        <div class="entry-head">
+          <h3 class="entry-title">Master's Thesis — Durham University</h3>
+          <span class="entry-date">May 2023 — Oct 2025</span>
+        </div>
+        <div class="entry-sub">Connecting observed and intrinsic galaxy properties using ML · Institute for Computational Cosmology, Durham, UK</div>
+        <p>Derived simple, interpretable mathematical expressions connecting observed and
+        intrinsic galaxy properties using machine learning and symbolic regression, trained
+        on GALFORM semi-analytical mocks mimicking the PAU Survey out to z&nbsp;~&nbsp;1.99.
+        Published in <em>MNRAS</em> (2025).</p>
+      </div>
+    </article>
+
+    <!-- EDUCATION -->
+    <article id="education">
+      <h2 class="major">Education</h2>
+
+      <div class="entry">
+        <div class="entry-head">
+          <h3 class="entry-title">PhD in Astronomy</h3>
+          <span class="entry-date">2025 — 2029</span>
+        </div>
+        <div class="entry-sub">Universidad de Atacama · Copiapó, Chile</div>
+        <p>Doctoral programme at the Instituto de Astronomía y Ciencias Planetarias (INCT),
+        working on environmental drivers of galaxy morphology.</p>
+      </div>
+
+      <div class="entry">
+        <div class="entry-head">
+          <h3 class="entry-title">Master's Research (Physics &amp; Astronomy)</h3>
+          <span class="entry-date">2023 — 2025</span>
+        </div>
+        <div class="entry-sub">Durham University · Institute for Computational Cosmology, UK</div>
+        <p>Master's thesis in collaboration with the ICC, Durham — developing interpretable
+        ML/statistical models for galaxy property inference on PAU Survey mocks (published
+        in MNRAS).</p>
+      </div>
+
+      <div class="entry">
+        <div class="entry-head">
+          <h3 class="entry-title">Integrated BS–MS Dual Degree, Physics</h3>
+          <span class="entry-date">2019 — 2024</span>
+        </div>
+        <div class="entry-sub">Indian Institute of Science Education &amp; Research (IISER) Bhopal · India</div>
+        <p>Five-year integrated programme in Physics, with Master's research carried out in
+        collaboration with Durham University.</p>
+      </div>
+    </article>
+
+    <!-- CONTACT -->
+    <article id="contact">
+      <h2 class="major">Contact</h2>
+      <p style="text-align:center;">Happy to hear from you — collaborations, galaxy evolution,
+      ML in astronomy, or just to meet at SOCHIAS in Valparaíso.</p>
+
+      <form method="post" action="#" onsubmit="event.preventDefault(); alert('Thanks for your message! (Form is a demo — please email me directly at adarshastron@gmail.com)'); this.reset();">
+        <div class="fields">
+          <div class="field half">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" />
+          </div>
+          <div class="field half">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" />
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea name="message" id="message" rows="4"></textarea>
+          </div>
+        </div>
+        <ul class="actions">
+          <li><input type="submit" value="Send Message" /></li>
+          <li><input type="reset" value="Reset" /></li>
+        </ul>
+      </form>
+
+      <div class="contact-details">
+        <p><strong>Email:</strong> <a href="mailto:adarshastron@gmail.com">adarshastron@gmail.com</a></p>
+        <p><strong>Institution:</strong> INCT, Universidad de Atacama, Copiapó, Chile</p>
+      </div>
+
+      <ul class="icons">
+        <li><a href="https://www.linkedin.com/in/adarsh-kumar-041099211" target="_blank" rel="noopener" title="LinkedIn"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.44a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg></a></li>
+        <li><a href="https://academic.oup.com/mnras/advance-article/doi/10.1093/mnras/stag1332/8735175" target="_blank" rel="noopener" title="MNRAS Publication"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 3h16a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm1 4v2h14V7H5zm0 4v2h14v-2H5zm0 4v2h10v-2H5z"/></svg></a></li>
+        <li><a href="mailto:adarshastron@gmail.com" title="Email"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 4h20a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm0 2v.5l10 6.5L22 6.5V6H2zm20 2.5-9.4 6.1a1 1 0 0 1-1.2 0L2 8.5V18h20V8.5z"/></svg></a></li>
+      </ul>
+    </article>
+
+    </div><!-- /.scroller -->
+  </div><!-- /#main -->
+
+  <!-- Footer -->
+  <footer id="footer">
+    <p class="copyright">&copy; Adarsh Kumar · Design inspired by <a href="https://html5up.net">HTML5 UP · Dimension</a> · Copiapó, Chile ✦</p>
+  </footer>
+
+</div>
+
+  <script>
+  // Panel switching — smooth 0.5s fade + rise transitions
+  (function(){
+    var body = document.body;
+    var main = document.getElementById('main');
+    var articles = main.querySelectorAll('article');
+    var activeArticle = null;
+
+    window.addEventListener('load', function(){
+      setTimeout(function(){ body.classList.remove('is-preload'); }, 80);
+    });
+
+    function openArticle(id) {
+      var article = document.getElementById(id);
+      if (!article) return;
+      var previous = activeArticle;
+      // Swap active reference immediately so close's setTimeout won't
+      // hide the overlay when switching between panels.
+      activeArticle = article;
+      if (previous) {
+        previous.classList.remove('active');
+        // Hide previous article after its outgoing transition
+        setTimeout(function(){
+          if (previous !== activeArticle) previous.style.display = '';
+        }, 500);
+      }
+      body.classList.add('is-article-visible');
+      article.style.display = 'block';
+      // Reset overlay scroll to the very top so the panel's heading is visible
+      requestAnimationFrame(function(){
+        main.scrollTop = 0;
+      });
+      article.scrollTop = 0;
+      window.scrollTo(0,0);
+      // Double-rAF so the browser paints the hidden state before adding .active
+      requestAnimationFrame(function(){
+        requestAnimationFrame(function(){
+          article.classList.add('active');
+        });
+      });
+      history.replaceState(null, '', '#' + id);
+    }
+
+    function closeArticle() {
+      if (!activeArticle) return;
+      var closing = activeArticle;
+      closing.classList.remove('active');
+      activeArticle = null;
+      // After transition ends, hide the article and the overlay
+      setTimeout(function(){
+        closing.style.display = '';
+        if (!activeArticle) body.classList.remove('is-article-visible');
+      }, 500);
+      history.replaceState(null, '', window.location.pathname);
+    }
+
+    articles.forEach(function(art){
+      var close = document.createElement('a');
+      close.className = 'close'; close.href = '#';
+      close.setAttribute('aria-label','Close'); close.textContent = 'Close';
+      close.addEventListener('click', function(e){ e.preventDefault(); closeArticle(); });
+      art.insertBefore(close, art.firstChild);
+    });
+
+    document.querySelectorAll('nav a[href^="#"]').forEach(function(a){
+      a.addEventListener('click', function(e){
+        var id = a.getAttribute('href').slice(1);
+        if (document.getElementById(id)) { e.preventDefault(); openArticle(id); }
+      });
+    });
+
+    document.querySelectorAll('#main a[href^="#"]').forEach(function(a){
+      a.addEventListener('click', function(e){
+        var id = a.getAttribute('href').slice(1);
+        if (document.getElementById(id)) { e.preventDefault(); openArticle(id); }
+      });
+    });
+
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeArticle(); });
+    document.addEventListener('click', function(e){
+      if (!activeArticle) return;
+      // Click on the dark backdrop (#main or the .scroller wrapper) closes
+      if (e.target === main || e.target.classList.contains('scroller')) closeArticle();
+    });
+
+    if (window.location.hash) {
+      var id = window.location.hash.slice(1);
+      if (document.getElementById(id)) setTimeout(function(){ openArticle(id); }, 350);
+    }
+  })();
+  </script>
+</body>
+</html>
